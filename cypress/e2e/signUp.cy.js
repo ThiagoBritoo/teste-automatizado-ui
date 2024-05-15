@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import { faker } from '@faker-js/faker';
 
-const site = 'http://lojaebac.ebaconline.art.br/minha-conta/'
+const url = '/minha-conta/'
 const name = faker.person.firstName();
 const email = faker.internet.email(name);
 const password = faker.internet.password(true);
@@ -11,7 +11,7 @@ const existingEmail = 'aluno_ebac@teste.com'
 context('Sign Up Functionality', () => {
 
     beforeEach(() => {
-        cy.visit(site)
+        cy.visit(url)
     })
 
     it('Successful sign up', () =>{
