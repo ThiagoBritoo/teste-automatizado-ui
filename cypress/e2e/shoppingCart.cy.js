@@ -2,50 +2,68 @@
 
 import { faker } from "@faker-js/faker";
     
-const site = 'https://practice.automationtesting.in/'
+const url = 'produtos'
 
-const randNum = faker.number.int({min: 1, max: 10});
+const quantity = faker.number.int({min: 1, max: 10});
 
-function addProductToCart() {
-    cy.get('.post-165 > .button').click();
-    cy.get('.added_to_cart').click();
-}
-
+const product = 'Ariel Roll Sleeve Sweatshirt'
 
 context('Shopping Cart Functionality', () => {
 
     beforeEach(() => {
 
-        cy.visit(site);
-        
-        addProductToCart();    
+        cy.visit(url);
     });
 
 
     it('Successful Product Addition', () => {
 
-        //Verifica a listagem de itens do carrinho
-        cy.get('.cart_item').should('exist');
+        cy.get('[class="products products-grid"]')
+            .contains('Ariel Roll Sleeve Sweatshirt').click();
+        cy.get('.button-variable-item-S').click();
+        cy.get('.button-variable-item-Purple').click();
+        cy.get('.input-text').clear().type(quantity);
+        cy.get('.single_add_to_cart_button').click();
+
+        cy.get('.dropdown-toggle > .mini-cart-items').should('contain', quantity);
+    });
+
+    it('Successful Product Addition - Using Custom Commands', () => {
+
+        cy.addProduct('Ariel Roll Sleeve Sweatshirt', quantity, 'M', 'Green');
+
+        cy.get('.dropdown-toggle > .mini-cart-items').should('contain', quantity);
     })
+
+    it('Successful Product Addition - Using Custom Commands', () => {
+
+        cy.addProduct('Ajax Full-Zip Sweatshirt', quantity, 'XS', 'Red');
+
+        cy.get('.dropdown-toggle > .mini-cart-items').should('contain', quantity);
+    })
+
 
     it('Update product quantity', () => {
 
-        //Altera quantidade de um item
-        cy.get('.quantity > .input-text').clear().type(`${randNum}`);
-        cy.get('[name="update_cart"]').click();
+        cy.addProduct(product, quantity, 'S', 'Purple' );
 
         //Verifica se a quantidade foi alterada corretamente
-        cy.get('.quantity > .input-text').invoke('val').then(currentValue => {
-            expect(currentValue).to.equal(`${randNum}`);
+        cy.get('.dropdown-toggle > .mini-cart-items').should('contain', quantity);
         });
-    })
 
     it('Remove itens from cart', () => {
 
+        cy.addProduct('Aether Gym Pant', quantity, 36, 'Blue');
+
+        //acessa o carrinho
+        cy.get('.dropdown-toggle > .text-skin > .icon-basket').click();
+        cy.get('#cart > .dropdown-menu > .widget_shopping_cart_content > .mini_cart_content > .mini_cart_inner > .mcart-border > .buttons > .view-cart').click({multiple: true});
+
+
         //Clica no botão de remover item
-        cy.get('.remove').click();
+        cy.get('.remove > .fa').click();
 
         //Verifica mensagem informando a remoção
-        cy.get('.woocommerce-message').should('contain', 'removed');
-    })
-})
+        cy.get('.woocommerce-message').should('contain', `removido`);
+    });
+});

@@ -3,7 +3,8 @@ import { faker } from '@faker-js/faker';
 
 const url = '/minha-conta/'
 const name = faker.person.firstName();
-const email = faker.internet.email(name);
+const lastName = faker.person.lastName();
+const email = faker.internet.exampleEmail({firstName: name});
 const password = faker.internet.password(true);
 const existingEmail = 'aluno_ebac@teste.com'
 
@@ -40,5 +41,11 @@ context('Sign Up Functionality', () => {
         cy.get('#reg_password').type('123');
         cy.get('.woocommerce-password-strength').should('exist');
 
-    })    
+    })
+
+    it('Successful sing-up - [with Custom Commands]', () => {
+        cy.signUp(email, password, name, lastName);
+
+        cy.get('a > .hidden-xs').should('contain' , `Welcome ${name.toLowerCase()}`);
+    })
 });

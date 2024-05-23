@@ -1,0 +1,51 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Abominable Hoodie"
+        },
+        {
+            "id": 2,
+            "name": "Aero Daily Fitness Tee"
+        },
+        {           
+            "id": 3,
+            "name": "Aether Gym Pant"
+        },
+        {
+            "id": 4,
+            "name": "Ajax Full-Zip Sweatshirt"
+        },
+        {
+            "id": 5,
+            "name": "Apollo Running Short"
+        },
+        {
+            "id": 6,
+            "name": "Arcadio Gym Short"
+        },
+        {
+            "id": 7,
+            "name": "Argus All-Weather Tank"
+        },
+        {            
+            "id": 8,
+            "name": "Ariel Roll Sleeve Sweatshirt"
+        },
+        {            
+            "id": 9,
+            "name": "Atlas Fitness Tank"
+        }
+    ],
+    "products_reference": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+    ]
+}
